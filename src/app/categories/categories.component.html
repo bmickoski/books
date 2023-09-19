@@ -1,0 +1,117 @@
+<!-- <div *ngIf="loading()"><app-spinner></app-spinner></div>
+<div class="container flex w-full justify-start">
+  <div class="grid grid-flow-col gap-4">
+    <div>
+      <ul class="flex flex-col bg-gray-300 p-4">
+        <li
+          class="border-gray-400 flex flex-row mb-2"
+          *ngFor="let category of categories"
+        >
+          <div
+            (click)="setCategory(category)"
+            class="select-none cursor-pointer bg-gray-200 rounded-md flex flex-1 items-center p-4 transition duration-500 ease-in-out transform hover:-translate-y-1 hover:shadow-lg"
+          >
+            <div class="flex-1 pl-1 mr-16">
+              {{ category.name }}
+            </div>
+          </div>
+        </li>
+      </ul>
+    </div>
+    <div>
+      <div class="flex flex-col" *ngIf="selectedCategoryId()">
+        <form class="mb-2">
+          <label
+            for="search"
+            class="mb-2 text-sm font-medium text-gray-900 sr-only dark:text-white"
+            >Search</label
+          >
+          <div class="relative">
+            <div
+              class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none"
+            >
+              <svg
+                aria-hidden="true"
+                class="w-5 h-5 text-gray-500 dark:text-gray-400"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
+                ></path>
+              </svg>
+            </div>
+            <input
+              [ngModel]="search()"
+              (ngModelChange)="search.set($event)"
+              type="search"
+              id="search"
+              name="search"
+              class="block w-full p-4 pl-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+              placeholder="Search books by title"
+              required
+            />
+            <button
+              (click)="searchBooks()"
+              type="submit"
+              class="text-white absolute right-2.5 bottom-2.5 bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+            >
+              Search
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div> -->
+<cdk-virtual-scroll-viewport
+  appendOnly
+  itemSize="400px"
+  class="category-viewport w-full"
+>
+  <div *cdkVirtualFor="let book of books()" class="category-item">
+    <div class="grid gap-2">
+      <a
+        (click)="goToBookDetails(book)"
+        href="javascript:void(0);"
+        class="flex flex-col items-center bg-white border border-gray-200 rounded-lg shadow md:flex-row hover:bg-gray-100 dark:border-gray-700 dark:bg-gray-800 dark:hover:bg-gray-700"
+      >
+        <img
+          [ngSrc]="book.volumeInfo?.imageLinks?.smallThumbnail"
+          class="object-cover w-full rounded-t-lg h-96 md:h-auto md:w-48 md:rounded-none md:rounded-l-lg"
+          priority
+          width="400"
+          height="200"
+        />
+        <div class="flex flex-col justify-between p-4 leading-normal">
+          <h5
+            class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white"
+          >
+            {{ book.volumeInfo?.title }}
+          </h5>
+          <p class="mb-3 font-normal text-gray-700 dark:text-gray-400">
+            {{ book.volumeInfo.subtitle }}
+          </p>
+          <div class="flex mt-4 space-x-3 md:mt-6">
+            <p class="mb-3 font-normal text-gray-700 dark:text-gray-400">
+              {{ book.volumeInfo.publisher }}
+            </p>
+            <p class="mb-3 font-normal text-gray-700 dark:text-gray-400">
+              {{ book.volumeInfo.publishedDate }}
+            </p>
+          </div>
+        </div>
+        <div class="flex flex-1 justify-between p-4 leading-normal">
+          <p class="mb-3 font-normal text-gray-700 dark:text-gray-400">
+            {{ book.volumeInfo?.description }}
+          </p>
+        </div>
+      </a>
+    </div>
+  </div>
+</cdk-virtual-scroll-viewport>
